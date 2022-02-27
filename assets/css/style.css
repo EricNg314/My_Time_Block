@@ -56,11 +56,11 @@ textarea{
 .time-block{
   text-align: center;
   border-radius: 15px;
+  min-height: 80px;
 }
 
 .row {
   white-space: pre-wrap;
-  height: 80px;
   border-top: 1px solid var(--primary-bg-color);
 }
 
