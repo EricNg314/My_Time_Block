@@ -1,16 +1,17 @@
 var taskContainer = $("#timeBlockContainer");
 
 var defaultTimeSlots = [
-  { time: "9:00 AM", task: "abd" },
-  { time: "10:00 AM", task: "qwe" },
+  { time: "9:00 AM", task: "" },
+  { time: "10:00 AM", task: "" },
   { time: "11:00 AM", task: "" },
-  { time: "12:00 PM", task: "oijafe" },
+  { time: "12:00 PM", task: "" },
   { time: "1:00 PM", task: "" },
   { time: "2:00 PM", task: "" },
   { time: "3:00 PM", task: "" },
   { time: "4:00 PM", task: "" },
   { time: "5:00 PM", task: "" },
 ];
+var needDefaultStorage = true;
 var timeTaskStorage = getStorage();
 
 displayTaskList();
@@ -47,14 +48,20 @@ function displayTaskList() {
   // var currentStorage = getStorage();
 
     // Add some date.
-    for(var i = 0; i < defaultTimeSlots.length; i++){
-      renderRow(defaultTimeSlots[i].time,defaultTimeSlots[i].task)
+    if(needDefaultStorage === true){
+      for(var i = 0; i < defaultTimeSlots.length; i++){
+        renderRow(defaultTimeSlots[i].time,defaultTimeSlots[i].task)
+      }
+      needDefaultStorage = false
+    } else {
+      for(var i = 0; i < timeTaskStorage.length; i++){
+        renderRow(timeTaskStorage[i].time,timeTaskStorage[i].task)
+      }
     }
  
 }
 
 function renderRow(time, task){
-  
   var timeRowSearch = $(`li[data-time='${time}']`)
   var timeRowEle = ""
   var labelEle = ""
@@ -92,6 +99,8 @@ function getStorage() {
   var storageData = JSON.parse(localStorage.getItem("taskList"));
   if (storageData === null) {
     storageData = [];
+  } else {
+    needDefaultStorage = false
   }
 
   return storageData;
@@ -101,7 +110,7 @@ function saveToStorage() {
   var currentStorage = timeTaskStorage;
 
   if (currentStorage.length > 1) {
-    currentStorage.sort(compareDescending);
+    // currentStorage.sort(compareDescending);
   }
   localStorage.setItem("taskList", JSON.stringify(currentStorage));
   // displayTaskList();
