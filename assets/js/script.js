@@ -16,27 +16,31 @@ var timeTaskStorage = getStorage();
 displayTaskList();
 
 $(document).ready(function () {
-  taskContainer.on("click", "button.saveBtn", function () {
-    clickSaveTask();
+  taskContainer.on("click", "button.saveBtn", function (event) {
+    event.preventDefault();
+    var thisSaveEle = $(this).closest('li');
+    var time = thisSaveEle.attr("data-time");
+    var task = $(`li[data-time='${time}']`).find('textarea').val()
+    clickSaveTask(time, task);
   });
 });
 
-function clickSaveTask() {
-  var time = "";
-  var task = "";
-  saveTask();
-  saveStorage();
-  // displayTaskList();
-
-
-  // renderRow(time, task)
+function clickSaveTask(time, task) {
+  saveTask(time, task);
+  saveToStorage();
 }
 
-function saveTask() {
-  // TODO: Update the timeSlots object.
-  // var d = new Date();
-  // d.getHours();
-  // renderRow()
+function saveTask(time, task) {
+  console.log("timeTaskStorage: ", timeTaskStorage)
+  if(timeTaskStorage.length === 0) {
+    timeTaskStorage = defaultTimeSlots
+  }
+  for(var i=0; i < timeTaskStorage.length; i++){
+    if(timeTaskStorage[i].time === time){
+      timeTaskStorage[i].task = task
+    }
+  }
+  console.log("timeTaskStorage: ", timeTaskStorage)
 }
 
 function displayTaskList() {
@@ -51,7 +55,6 @@ function displayTaskList() {
 
 function renderRow(time, task){
   
-  console.log("renderRow")
   var timeRowSearch = $(`li[data-time='${time}']`)
   var timeRowEle = ""
   var labelEle = ""
@@ -59,7 +62,7 @@ function renderRow(time, task){
   var buttonEle = ""
   var rowExists = false;
 
-  console.log("timeRowSearch", timeRowSearch)
+  // console.log("timeRowSearch", timeRowSearch)
   
     // if the row element does not exist, then create new one, else assign
     // Helps render content once.
@@ -75,7 +78,7 @@ function renderRow(time, task){
     textareaEle.val(task)
   }
 
-  console.log("timeRowEle", timeRowEle)
+  // console.log("timeRowEle", timeRowEle)
 
   if(rowExists === false){
     labelEle.appendTo(timeRowEle);
@@ -94,14 +97,14 @@ function getStorage() {
   return storageData;
 }
 
-function saveStorage() {
-  var currentStorage = timeSlots;
+function saveToStorage() {
+  var currentStorage = timeTaskStorage;
 
   if (currentStorage.length > 1) {
     currentStorage.sort(compareDescending);
   }
   localStorage.setItem("taskList", JSON.stringify(currentStorage));
-  displayTaskList();
+  // displayTaskList();
 }
 
 function compareDescending(a, b) {
