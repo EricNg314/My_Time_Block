@@ -6,6 +6,7 @@
   --secondary-bg-color: rgb(40, 40, 40);
   --tertiary-bg-color: rgb(60, 60, 60);
   --quaternary-bg-color: rgb(80, 80, 80);
+  --quinary-bg-color: rgb(120, 120, 120);
 }
 
 * {
@@ -34,12 +35,22 @@ body {
 }
 
 textarea{
-  background: transparent;
-  border: none;
+  /* background: transparent; */
+  /* border: none; */
   resize: none;
   color: #000000;
   border-left: 1px solid black;
   padding: 10px;
+}
+.form-control{
+  background: rgb(200, 200, 200);
+  border: 1px solid rgb(200, 200, 200);
+  color: #000000;
+}
+
+.form-control:focus{
+  background: rgb(200, 200, 200);
+  color: #000000;
 }
 
 .spotlight {
@@ -71,17 +82,18 @@ textarea{
 }
 
 .past {
-  background-color: #d3d3d3;
+  background-color: var(--quinary-bg-color);
   color: white;
 }
 
 .present {
-  background-color: #ff6961;
+  background-color: rgb(25, 107, 158);
+  /* background-color: var(--primary-bg-color); */
   color: white;
 }
 
 .future {
-  background-color: #77dd77;
+  background-color: var(--tertiary-bg-color);
   color: white;
 }
 
