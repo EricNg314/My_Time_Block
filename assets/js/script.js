@@ -35,7 +35,6 @@ function clickSaveTask(time, task) {
 }
 
 function saveTask(time, task) {
-  // console.log("timeTaskStorage: ", timeTaskStorage)
   if (timeTaskStorage.length === 0) {
     timeTaskStorage = defaultTimeSlots;
   }
@@ -44,11 +43,9 @@ function saveTask(time, task) {
       timeTaskStorage[i].task = task;
     }
   }
-  // console.log("timeTaskStorage: ", timeTaskStorage)
 }
 
 function displayTaskList() {
-  // var currentStorage = getStorage();
 
   // Add some date.
   if (needDefaultStorage === true) {
@@ -122,8 +119,6 @@ function getPastPresentFuture(timeArr) {
     minute: timeArr[1],
   }).toObject();
 
-  // console.log("current: ", current)
-  // console.log("rowDateTime: ", rowDateTime)
   if (current.hour === rowDateTime.hour) {
     pastPresentFuture = "present";
   } else if (current.hour > rowDateTime.hour) {
@@ -153,7 +148,6 @@ function saveToStorage() {
     // currentStorage.sort(compareDescending);
   }
   localStorage.setItem("taskList", JSON.stringify(currentStorage));
-  // displayTaskList();
 }
 
 function compareDescending(a, b) {
