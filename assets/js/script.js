@@ -69,7 +69,6 @@ function renderRow(time, task) {
   var labelEle = "";
   var textareaEle = "";
   var buttonEle = "";
-  var rowExists = false;
   var timeArr = time.split(":");
   var localTime = "";
   var amPm = "";
@@ -89,7 +88,6 @@ function renderRow(time, task) {
   // if the row element does not exist, then create new one, else assign
   // Helps render content once.
   if (timeRowSearch.length === 0) {
-    rowExists = false;
     timeRowEle = $(
       `<li class="row color-bg-secondary form-floating time-block" data-time="${time}">`
     );
@@ -104,18 +102,16 @@ function renderRow(time, task) {
     buttonEle = $(
       '<button class="col-2 col-lg-1 saveBtn"><i class="bi-calendar-plus fa-lg"></i></button>'
     );
-  } else {
-    rowExists = true;
-    textareaEle = timeRowSearch.find("textarea");
-    textareaEle.val(task);
-  }
-
-  if (rowExists === false) {
+    
     labelEle.appendTo(timeRowEle);
     textareaEle.appendTo(timeRowEle);
     buttonEle.appendTo(timeRowEle);
     timeRowEle.appendTo(taskContainer);
+  } else {
+    textareaEle = timeRowSearch.find("textarea");
+    textareaEle.val(task);
   }
+
 }
 
 function getPastPresentFuture(timeArr) {
